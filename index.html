@@ -1,271 +1,218 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#183c2d">
-<title>GreenNote | 植物管理</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8f4">
+<title>GreenNote</title>
 <style>
-:root {
-  --green:#244b38;
-  --light:#edf3e9;
-  --bg:#f7f8f3;
-  --text:#25352b;
-  --muted:#7b887d;
-}
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-header {
-  background:var(--green);
-  color:white;
-  padding:28px 20px 25px;
-  border-radius:0 0 24px 24px;
-}
-.brand { font-size:13px; letter-spacing:3px; opacity:.8; }
-header h1 { margin:8px 0 5px; font-size:29px; }
-header p { margin:0; font-size:13px; opacity:.8; }
-main { max-width:650px; margin:auto; padding:20px 16px 40px; }
-.stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
-.stat {
-  background:white; padding:17px; border-radius:16px;
-  box-shadow:0 2px 12px #203b2910;
-}
-.stat span { display:block; color:var(--muted); font-size:12px; }
-.stat strong { display:block; font-size:27px; margin-top:5px; }
-.section-head {
-  display:flex; align-items:center; justify-content:space-between;
-  gap:8px; margin:22px 0 13px;
-}
-h2 { font-size:18px; margin:0; }
-button {
-  border:0; border-radius:11px; padding:11px 14px;
-  font-size:13px; font-weight:600; cursor:pointer;
-}
-.primary { background:var(--green); color:white; }
-.search {
-  width:100%; padding:14px; border:1px solid #e0e6dc;
-  border-radius:12px; font-size:15px; background:white;
-}
-.plant {
-  background:white; border-radius:17px; padding:16px;
-  margin-bottom:12px; box-shadow:0 2px 12px #203b2909;
-}
-.plant-top { display:flex; justify-content:space-between; gap:12px; }
-.plant h3 { margin:0 0 5px; font-size:17px; }
-.species { color:var(--muted); font-size:12px; }
-.last { font-size:12px; color:var(--muted); margin-top:13px; }
-.actions { display:flex; gap:8px; margin-top:14px; }
-.actions button { flex:1; }
-.water { background:var(--light); color:var(--green); }
-.delete { background:#f7eeee; color:#965454; }
-.empty {
-  text-align:center; padding:35px 15px; background:white;
-  border-radius:16px; color:var(--muted); font-size:14px;
-}
-form {
-  display:grid; gap:13px; background:white; padding:18px;
-  border-radius:16px; margin-bottom:18px;
-}
-label { font-size:13px; font-weight:600; }
-input,textarea {
-  display:block; width:100%; margin-top:6px; padding:12px;
-  border:1px solid #dce3d8; border-radius:10px;
-  font:inherit; font-size:15px; background:white;
-}
-textarea { min-height:75px; resize:vertical; }
-.form-actions { display:flex; gap:8px; }
-.form-actions button { flex:1; }
-.history {
-  margin-top:14px; padding-top:12px; border-top:1px solid #edf0e9;
-  font-size:12px; color:var(--muted);
-}
-footer { text-align:center; color:#9ba59b; font-size:11px; padding:15px; }
-[hidden] { display:none !important; }
+:root{--bg:#f7f8f4;--green:#536b4f;--light:#e8eee3;--line:#e7e9e2;--text:#30362e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,sans-serif;padding-bottom:85px}
+header{padding:22px 20px 12px;font-size:25px;font-weight:700;color:var(--green)}
+main{max-width:620px;margin:auto;padding:0 16px}
+h1{font-size:22px;margin:14px 4px 18px}
+h2{font-size:16px}
+.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:16px;margin-bottom:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+button{font:inherit;cursor:pointer;border:0;border-radius:11px;padding:11px 14px}
+.primary{background:var(--green);color:white}
+.secondary{background:var(--light);color:var(--green)}
+.small{padding:7px 11px}
+input,textarea,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:white;font:inherit;color:var(--text)}
+label{display:block;font-size:13px;margin:14px 0 6px}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:15px}
+.week{text-align:center;color:#92988e;font-size:12px;padding:6px 0}
+.day{background:white;border:1px solid transparent;padding:8px 0;min-height:44px}
+.day.today{border-color:#9aaf91}
+.day.selected{background:var(--green);color:white}
+.day.empty{background:transparent}
+.dot{display:block;margin:4px auto 0;width:5px;height:5px;border-radius:50%;background:#91a985}
+.day.selected .dot{background:white}
+.item{padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.item:last-child{border:0}
+.muted{font-size:12px;color:#8b9187;margin-top:5px}
+.empty{text-align:center;padding:22px 5px;color:#8b9187;font-size:13px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+.nav button{background:transparent;color:#92988e;font-size:12px}
+.nav button.active{color:var(--green);font-weight:700}
+.nav span{display:block;font-size:19px;margin-bottom:3px}
+.hidden{display:none!important}
+.thumb{width:54px;height:54px;object-fit:cover;border-radius:12px;background:var(--light);margin-right:12px}
+.plant{display:flex;align-items:center;gap:0}
+.plant-info{flex:1}
+.photo{width:100%;max-height:300px;object-fit:cover;border-radius:12px;margin-top:12px}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">BOTANICAL JOURNAL</div>
-  <h1>GreenNote 🌿</h1>
-  <p>植物と過ごす、日々の記録。</p>
-</header>
-
+<header>GreenNote</header>
 <main>
-  <div class="stats">
-    <div class="stat">
-      <span>育てている植物</span>
-      <strong id="plantCount">0</strong>
-    </div>
-    <div class="stat">
-      <span>今日の水やり記録</span>
-      <strong id="waterCount">0</strong>
-    </div>
-  </div>
+<section id="calendarPage">
+<h1>Calendar</h1>
+<div class="panel">
+<div class="top">
+<strong id="month"></strong>
+<div><button class="secondary small" id="prev">‹</button> <button class="secondary small" id="next">›</button></div>
+</div>
+<div class="calendar" id="calendar"></div>
+</div>
+<p class="muted" id="selectedLabel"></p>
+<div class="panel" id="dayRecords"></div>
+</section>
 
-  <div class="section-head">
-    <h2>My Plants</h2>
-    <button class="primary" id="showForm">＋ 植物を追加</button>
-  </div>
+<section id="listPage" class="hidden">
+<h1>Plants</h1>
+<div class="panel">
+<div class="top"><strong>植物一覧</strong><button class="primary" id="addPlant">＋ 登録</button></div>
+<div id="plants"></div>
+</div>
+</section>
 
-  <form id="plantForm" hidden>
-    <h2>新しい植物</h2>
-    <label>植物の名前 *
-      <input id="name" required maxlength="80" placeholder="例：亀甲竜">
-    </label>
-    <label>品種・学名
-      <input id="species" maxlength="100" placeholder="例：Dioscorea elephantipes">
-    </label>
-    <label>置き場所
-      <input id="location" maxlength="100" placeholder="例：植物ラック上段">
-    </label>
-    <label>メモ
-      <textarea id="notes" maxlength="1000" placeholder="購入日、用土、育て方など"></textarea>
-    </label>
-    <div class="form-actions">
-      <button class="primary" type="submit">登録する</button>
-      <button type="button" id="cancelForm">キャンセル</button>
-    </div>
-  </form>
+<section id="noticePage" class="hidden">
+<h1>Notice</h1>
+<div class="panel">
+<div class="top"><strong>お知らせ</strong><button class="secondary small" id="readAll">すべて確認</button></div>
+<div id="notices"></div>
+</div>
+</section>
 
-  <input class="search" id="search" placeholder="🔍 植物を検索">
+<section id="plantFormPage" class="hidden">
+<button class="secondary" id="cancelPlant">‹ 戻る</button>
+<h1>植物を登録</h1>
+<div class="panel">
+<form id="plantForm">
+<label>植物名 *</label><input id="pName" required placeholder="例：亀甲竜">
+<label>品種・学名</label><input id="pSpecies" placeholder="例：Dioscorea elephantipes">
+<label>置き場所</label><input id="pLocation" placeholder="例：室内ラック">
+<label>メモ</label><textarea id="pNotes" rows="3"></textarea>
+<button class="primary" style="width:100%;margin-top:16px">保存する</button>
+</form>
+</div>
+</section>
 
-  <div class="section-head">
-    <h2>植物一覧</h2>
-    <span id="resultCount" class="species">0 plants</span>
-  </div>
-  <div id="plantList"></div>
+<section id="detailPage" class="hidden">
+<button class="secondary" id="backList">‹ 植物一覧</button>
+<div id="detail"></div>
+</section>
+
+<section id="recordPage" class="hidden">
+<button class="secondary" id="backDetail">‹ 戻る</button>
+<h1>管理記録</h1>
+<div class="panel">
+<form id="recordForm">
+<label>記録日</label><input id="rDate" type="date" required>
+<label>管理内容</label>
+<select id="rType">
+<option>水やり</option><option>肥料</option><option>植え替え</option>
+<option>葉水</option><option>写真撮影</option><option>その他</option>
+</select>
+<label>メモ</label><textarea id="rNotes" rows="3" placeholder="気づいたことなど"></textarea>
+<button class="primary" style="width:100%;margin-top:16px">記録を保存</button>
+</form>
+</div>
+</section>
 </main>
-<footer>GreenNote · Your personal plant journal</footer>
+
+<nav class="nav">
+<button class="active" data-page="calendarPage"><span>▦</span>Calendar</button>
+<button data-page="listPage"><span>♧</span>List</button>
+<button data-page="noticePage"><span>♧</span>Notice <b id="unread"></b></button>
+</nav>
 
 <script>
-const KEY = "greennote-plants-v1";
-let plants = [];
-
-try {
-  plants = JSON.parse(localStorage.getItem(KEY) || "[]");
-  if (!Array.isArray(plants)) plants = [];
-} catch {
-  plants = [];
+const $=id=>document.getElementById(id);
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const load=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))||fallback}catch{return fallback}};
+let plants=load("gnPlants",[]);
+let records=load("gnRecords",[]);
+let notices=load("gnNotices",[]);
+let chosen=today(), viewDate=new Date(), currentPlant=null;
+function save(){localStorage.setItem("gnPlants",JSON.stringify(plants));localStorage.setItem("gnRecords",JSON.stringify(records));localStorage.setItem("gnNotices",JSON.stringify(notices))}
+function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function show(page){
+document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+$(page).classList.remove("hidden");
+document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+if(page==="calendarPage")renderCalendar();
+if(page==="listPage")renderPlants();
+if(page==="noticePage")renderNotices()
 }
-
-const $ = id => document.getElementById(id);
-
-function save() {
-  try {
-    localStorage.setItem(KEY, JSON.stringify(plants));
-    render();
-  } catch {
-    alert("保存できなかったよ。ブラウザの空き容量を確認してね。");
-  }
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>show(b.dataset.page));
+function renderCalendar(){
+const y=viewDate.getFullYear(),m=viewDate.getMonth();
+$("month").textContent=y+"年 "+(m+1)+"月";
+const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();
+let html=["日","月","火","水","木","金","土"].map(w=>`<div class="week">${w}</div>`).join("");
+for(let i=0;i<first;i++)html+='<div class="day empty"></div>';
+for(let d=1;d<=last;d++){
+const date=y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+const has=records.some(r=>r.date===date);
+html+=`<button class="day ${date===today()?"today":""} ${date===chosen?"selected":""}" data-date="${date}">${d}${has?'<i class="dot"></i>':""}</button>`
 }
-
-function dateText(value) {
-  if (!value) return "まだ記録なし";
-  const d = new Date(value + "T12:00:00");
-  return Number.isNaN(d.getTime()) ? "まだ記録なし" :
-    `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
+$("calendar").innerHTML=html;
+$("calendar").querySelectorAll("[data-date]").forEach(b=>b.onclick=()=>{chosen=b.dataset.date;renderCalendar()});
+$("selectedLabel").textContent=chosen+" の記録";
+const list=records.filter(r=>r.date===chosen);
+$("dayRecords").innerHTML=list.length?list.map(r=>`<div class="item"><strong>${esc(r.type)}</strong><div class="muted">${esc(r.plantName)}</div>${r.notes?`<div class="muted">${esc(r.notes)}</div>`:""}</div>`).join(""):'<div class="empty">この日の記録はありません</div>'
 }
-
-function render() {
-  const today = new Date().toLocaleDateString("sv-SE");
-  $("plantCount").textContent = plants.length;
-  $("waterCount").textContent = plants.filter(p => p.lastWater === today).length;
-
-  const query = $("search").value.trim().toLowerCase();
-  const filtered = plants.filter(p =>
-    [p.name,p.species,p.location,p.notes].join(" ").toLowerCase().includes(query)
-  );
-
-  $("resultCount").textContent = `${filtered.length} plants`;
-
-  if (!filtered.length) {
-    $("plantList").innerHTML = `<div class="empty">${
-      plants.length ? "該当する植物が見つからないよ。" :
-      "まだ植物が登録されていないよ。<br>「＋ 植物を追加」から始めよう 🌱"
-    }</div>`;
-    return;
-  }
-
-  $("plantList").innerHTML = filtered.map(p => `
-    <article class="plant">
-      <div class="plant-top">
-        <div>
-          <h3>🌿 ${escapeHTML(p.name)}</h3>
-          <div class="species">${escapeHTML(p.species || "品種未登録")}</div>
-        </div>
-      </div>
-      ${p.location ? `<div class="last">📍 ${escapeHTML(p.location)}</div>` : ""}
-      ${p.notes ? `<div class="last">${escapeHTML(p.notes)}</div>` : ""}
-      <div class="last">💧 最終水やり：${dateText(p.lastWater)}</div>
-      <div class="actions">
-        <button class="water" data-water="${p.id}">💧 水やり記録</button>
-        <button class="delete" data-delete="${p.id}">削除</button>
-      </div>
-      <div class="history">登録日：${dateText(p.created)}</div>
-    </article>
-  `).join("");
+$("prev").onclick=()=>{viewDate.setMonth(viewDate.getMonth()-1);renderCalendar()};
+$("next").onclick=()=>{viewDate.setMonth(viewDate.getMonth()+1);renderCalendar()};
+function renderPlants(){
+$("plants").innerHTML=plants.length?plants.map(p=>`<div class="item plant" data-id="${p.id}"><div class="thumb" style="display:grid;place-items:center">♧</div><div class="plant-info"><strong>${esc(p.name)}</strong><div class="muted">${esc(p.species||"品種未登録")}</div></div>›</div>`).join(""):'<div class="empty">まだ植物が登録されていません</div>';
+$("plants").querySelectorAll("[data-id]").forEach(el=>el.onclick=()=>openDetail(el.dataset.id))
 }
-
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, c => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;",
-    '"':"&quot;", "'":"&#39;"
-  })[c]);
+$("addPlant").onclick=()=>{ $("plantForm").reset();show("plantFormPage")};
+$("cancelPlant").onclick=()=>show("listPage");
+$("plantForm").onsubmit=e=>{
+e.preventDefault();
+plants.push({id:String(Date.now()),name:$("pName").value.trim(),species:$("pSpecies").value.trim(),location:$("pLocation").value.trim(),notes:$("pNotes").value.trim(),created:today(),photo:""});
+save();show("listPage")
+};
+function openDetail(id){
+currentPlant=plants.find(p=>p.id===id);if(!currentPlant)return;
+show("detailPage");
+$("detail").innerHTML=`<h1>${esc(currentPlant.name)}</h1><div class="panel">
+<div>${esc(currentPlant.species||"品種未登録")}</div>
+${currentPlant.location?`<p class="muted">置き場所：${esc(currentPlant.location)}</p>`:""}
+${currentPlant.notes?`<p>${esc(currentPlant.notes)}</p>`:""}
+<label>植物の写真</label><input id="photoInput" type="file" accept="image/*">
+${currentPlant.photo?`<img class="photo" src="${currentPlant.photo}">`:""}
+<button class="primary" style="width:100%;margin-top:16px" id="addRecord">＋ 管理記録</button>
+<button class="secondary" style="width:100%;margin-top:8px" id="deletePlant">植物を削除</button>
+</div><h2>管理履歴</h2><div class="panel" id="history"></div>`;
+$("photoInput").onchange=e=>{
+const file=e.target.files[0];if(!file)return;
+const reader=new FileReader();reader.onload=()=>{
+currentPlant.photo=reader.result;save();openDetail(currentPlant.id)
+};reader.readAsDataURL(file)
+};
+$("addRecord").onclick=()=>{ $("recordForm").reset();$("rDate").value=today();show("recordPage")};
+$("deletePlant").onclick=()=>{
+if(confirm("この植物を削除しますか？")){
+plants=plants.filter(p=>p.id!==currentPlant.id);
+records=records.filter(r=>r.plantId!==currentPlant.id);
+save();show("listPage")
+}};
+const history=records.filter(r=>r.plantId===currentPlant.id).sort((a,b)=>b.date.localeCompare(a.date));
+$("history").innerHTML=history.length?history.map(r=>`<div class="item"><strong>${esc(r.date)} · ${esc(r.type)}</strong>${r.notes?`<div class="muted">${esc(r.notes)}</div>`:""}</div>`).join(""):'<div class="empty">まだ記録がありません</div>'
 }
-
-$("showForm").addEventListener("click", () => {
-  $("plantForm").hidden = false;
-  $("name").focus();
-});
-$("cancelForm").addEventListener("click", () => {
-  $("plantForm").reset();
-  $("plantForm").hidden = true;
-});
-$("search").addEventListener("input", render);
-
-$("plantForm").addEventListener("submit", event => {
-  event.preventDefault();
-  plants.unshift({
-    id: Date.now().toString() + Math.random().toString(16).slice(2),
-    name: $("name").value.trim(),
-    species: $("species").value.trim(),
-    location: $("location").value.trim(),
-    notes: $("notes").value.trim(),
-    created: new Date().toLocaleDateString("sv-SE"),
-    lastWater: null
-  });
-  $("plantForm").reset();
-  $("plantForm").hidden = true;
-  save();
-});
-
-$("plantList").addEventListener("click", event => {
-  const waterId = event.target.closest("[data-water]")?.dataset.water;
-  const deleteId = event.target.closest("[data-delete]")?.dataset.delete;
-
-  if (waterId) {
-    const plant = plants.find(p => p.id === waterId);
-    if (!plant) return;
-    plant.lastWater = new Date().toLocaleDateString("sv-SE");
-    save();
-  }
-
-  if (deleteId) {
-    const plant = plants.find(p => p.id === deleteId);
-    if (!plant) return;
-    if (confirm(`「${plant.name}」を削除する？`)) {
-      plants = plants.filter(p => p.id !== deleteId);
-      save();
-    }
-  }
-});
-
-render();
+$("backList").onclick=()=>show("listPage");
+$("backDetail").onclick=()=>openDetail(currentPlant.id);
+$("recordForm").onsubmit=e=>{
+e.preventDefault();if(!currentPlant)return;
+records.push({id:String(Date.now()),plantId:currentPlant.id,plantName:currentPlant.name,date:$("rDate").value,type:$("rType").value,notes:$("rNotes").value.trim()});
+notices.push({id:String(Date.now()+1),title:currentPlant.name+"：管理記録",desc:$("rDate").value+" "+$("rType").value,read:false});
+save();chosen=$("rDate").value;viewDate=new Date(chosen+"T12:00:00");show("detailPage");openDetail(currentPlant.id)
+};
+function renderNotices(){
+$("unread").textContent=notices.some(n=>!n.read)?"•":"";
+$("notices").innerHTML=notices.length?notices.slice().reverse().map(n=>`<div class="item" data-notice="${n.id}"><strong>${esc(n.title)} ${n.read?"":'<span style="color:#c77d57">●</span>'}</strong><div class="muted">${esc(n.desc)}</div><button class="secondary small" style="margin-top:8px">${n.read?"確認済み":"確認する"}</button></div>`).join(""):'<div class="empty">お知らせはありません</div>';
+$("notices").querySelectorAll("[data-notice]").forEach(el=>el.onclick=()=>{const n=notices.find(n=>n.id===el.dataset.notice);n.read=true;save();renderNotices()})
+}
+$("readAll").onclick=()=>{notices.forEach(n=>n.read=true);save();renderNotices()};
+$("headerDate").textContent=today();
+renderCalendar();renderPlants();renderNotices();
 </script>
 </body>
 </html>
